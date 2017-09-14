@@ -24,5 +24,4 @@ int main() {
 	demo d2{d1};
 	demo d3{42};
 	demo d4{addone(d3)};
-
 }
