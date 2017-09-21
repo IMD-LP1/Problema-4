@@ -5,19 +5,25 @@
 class Vector {
 
 public:
-	Vector() : Vector{0 , nullptr} {}
-	Vector(int t) : tam_{t} , elementos_ = new double[tam_] {}
-	Vector(Vector const&) = default ;
-	~Vector() : delete[] elementos , elementos = nullptr {std::cout << "Destrutor\n" ;}
-
-
-	void vector_init (int t) {
+	Vector() {
+		tam_ = 0 ;
+		elementos_ = nullptr ;
+	}
+	
+	Vector(int t) {
 		tam_ = t ;
-		elementos_ = new double[tam_] ;	
+		elementos_ = new (std::nothrow) double[tam_] ;
+	}
+	Vector(Vector const&) = default ;
+	~Vector() {
+		delete[] elementos_ ;
+		elementos_ = nullptr ;
 	}
 
+
+
 	void vector_read () {
-		for (int ii{0} , ii < tam_ ; ii++) {
+		for (int ii{0} ; ii < tam_ ; ii++) {
 			std::cout << "Elemento[" << ii+1 << "]: " ;
 			std::cin >> elementos_[ii] ;
 		}
@@ -49,11 +55,10 @@ private:
 
 int main (int argc , char *argv[]) {
 	int n{0} , chave{0} ;
-	Vector vetor ;
 	std::cout << "Quantos elementos sua lista armazenara ? " ;
 	std::cin >> n ;
 
-	vetor.vecto_init(n) ;
+	Vector vetor(n) ;
 	vetor.vector_read() ;
 	std::cout << "Soma dos elementos informados: " << vetor.vector_sum() << std::endl ;
 	std::cout << "Informe a chave de busca: " ;
